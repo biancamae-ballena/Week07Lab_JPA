@@ -5,6 +5,11 @@
  */
 package dataaccess;
 
+import java.sql.Connection;
+import java.util.List;
+import models.Note;
+import org.apache.tomcat.jdbc.pool.jmx.ConnectionPool;
+
 /**
  *
  * @author 785284
@@ -12,6 +17,8 @@ package dataaccess;
 public class NoteDB {
     
 //    public int insert(Note note) {
+//        ConnectionPool pool = ConnectionPool.getInstance();
+//        Connection connection = pool.getConnection();
 //        
 //    }
 //    

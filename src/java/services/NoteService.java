@@ -5,14 +5,22 @@
  */
 package services;
 
+import dataaccess.NoteDB;
+
 /**
  *
  * @author 785284
  */
 public class NoteService {
     
-//    public Note get(int noteid) {
-//        
+//    private NoteDB noteDB;
+//    
+//    public NoteService() {
+//        noteDB = new NoteDB();
+//    }
+//    
+//    public Note get(int noteid) throws Exception {
+//        return noteDB.getNoteId(noteid);
 //    }
 //    
 //    public List<Note> getAll() {
