@@ -5,10 +5,19 @@
  */
 package dataaccess;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
  * @author 785284
  */
 public class DBUtil {
+    private static final EntityManagerFactory entity = Persistence.createEntityManagerFactory("NotesPU");
+    
+    public static EntityManagerFactory getEmFactory() {
+        return entity;
+    }
+    
     
 }

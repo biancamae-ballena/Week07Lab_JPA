@@ -9,6 +9,14 @@ package dataaccess;
  *
  * @author 785284
  */
-public class NoteDBException {
-    
+public class NoteDBException extends Exception {
+
+    /**
+     * Sends message from superclass Exception when there is an exception
+     *
+     * @param message
+     */
+    public NoteDBException(String message) {
+        super(message);
+    }
 }

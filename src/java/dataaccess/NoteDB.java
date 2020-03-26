@@ -5,10 +5,10 @@
  */
 package dataaccess;
 
-import java.sql.Connection;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import models.Note;
-import org.apache.tomcat.jdbc.pool.jmx.ConnectionPool;
 
 /**
  *
@@ -16,26 +16,74 @@ import org.apache.tomcat.jdbc.pool.jmx.ConnectionPool;
  */
 public class NoteDB {
     
-//    public int insert(Note note) {
-//        ConnectionPool pool = ConnectionPool.getInstance();
-//        Connection connection = pool.getConnection();
-//        
-//    }
-//    
-//    public int update(Note note) {
-//        
-//    }
-//    
-//    public List<Note> getAll() {
-//        
-//    }
-//    
-//    public Note get(int noteId) {
-//        
-//    }
-//    
-//    public int delete(Note note) {
-//        
-//    }
+    public int insert(Note note) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try {
+            trans.begin();
+            em.persist(note);
+            trans.commit();
+            return 1;
+        } catch (Exception e) {
+            trans.rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public int update(Note note) throws NoteDBException {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            em.merge(note);
+            trans.commit();
+            return 1;
+        } catch (Exception e) {
+            trans.rollback();
+            throw new NoteDBException("Error updating note.");
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Note> getAll() {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try {
+            List<Note> note = em.createNamedQuery("Note.findAll", Note.class).getResultList();
+            return note;                
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Note get(int noteid) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try {
+            Note note = em.find(Note.class, noteid);
+            return note;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public int delete(Note note) throws NoteDBException {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            // deleting notes
+            em.remove(em.merge(note));
+            trans.commit();
+            return 1;
+        } catch (Exception e) {
+            trans.rollback();
+            throw new NoteDBException("Error deleting note.");
+        } finally {
+            em.close();
+        }
+    }
     
 }
