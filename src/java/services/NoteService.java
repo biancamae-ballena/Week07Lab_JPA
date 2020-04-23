@@ -1,6 +1,7 @@
 package services;
 
 import dataaccess.NoteDB;
+import dataaccess.NoteDBException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -14,17 +15,17 @@ public class NoteService {
         noteDB = new NoteDB();
     }
 
-    public Note get(Integer noteid) throws Exception {
+    public Note get(Integer noteid) {
         Note note = noteDB.get(noteid);
         return note;
     }
 
-    public List<Note> getAllNote() throws Exception {
+    public List<Note> getAllNote() {
         List<Note> notes = noteDB.getAll();
         return notes;
     }
 
-    public int update(Integer noteid, String title, String contents) throws Exception {
+    public int update(Integer noteid, String title, String contents) throws NoteDBException {
         Note note = get(noteid);
         note.setDatecreated(new Date());
         note.setTitle(title);
